@@ -13,24 +13,27 @@ $users = [
         'password' => 'password3'
     ]
 ];
-foreach ($users as $user){
-    var_dump($user['password']);
+session_start();
+if(isset($_SESSION ["logged"]) && $_SESSION["logged"] === true){
+    Header("Location: ./login.php");
 }
-// session_start();
-// if (isset ($_POST["username"]) && isset($_POST["password"])){
-//     foreach ($users as $user) {
-//         if ($user["username"] === $_POST["username"]){
-//             if($users["password"] === $_POST["password"]){
-//                 $_SESSION["username"] = $_POST["username"];
-//                 $_SESSION["password"] = $_POST["password"];
-//                 Header("Location: ./login.php");
-//                 break;
-//             }
-//         }
-//     }
+if (isset ($_POST["username"]) && isset($_POST["password"])){
+    foreach ($users as $user) {
+        if ($user["username"] === $_POST["username"]){
+            if($user["password"] === $_POST["password"]){
+                $_SESSION["username"] = $_POST["username"];
+                $_SESSION["password"] = $_POST["password"];
+                $_SESSION["logged"] =  true;
+                Header("Location: ./login.php");
+                break;
+            }
+        }
+    }
     
-        
-// }
+if (isset($_SESSION["logged"])){
+    echo "riprova , hai sbagliato!";
+}       
+}
 
 ?>
 <!DOCTYPE html>
